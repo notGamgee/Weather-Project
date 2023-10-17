@@ -9,6 +9,7 @@
       crossorigin="anonymous"
     />
     <title>Weather App</title>
+    <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
     <link rel="stylesheet" href="src/style.css" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -21,22 +22,24 @@
   <body>
     <div class="container">
       <div class="weather-app">
-        <h1>Cumberland, MD</h1>
+        <h1 id="city">Cumberland</h1>
         <ul>
           <li class="time">Monday 10:10</li>
           <li class="condition">Clowdy</li>
         </ul>
         <div class="row">
           <div class="col-6">
-            <i class="fa-solid fa-cloud-moon fa-2xl"></i>
+            <span class="main-icon"
+              ><i class="fa-solid fa-cloud-moon fa-4x"></i
+            ></span>
             <span class="temperature">50</span
             ><span class="temp-unit"> °F|<a href="#">°C</a></span>
           </div>
           <div class="col-6">
             <ul>
-              <li>Precipitation</li>
-              <li>Humidity</li>
-              <li>Wind</li>
+              <li>Humidity <span id="humidity"></span>%</li>
+              <li>Feels Like <span id="adjusted-temp"></span>°</li>
+              <li>Windspeed <span id="wind"></span></li>
             </ul>
           </div>
         </div>
