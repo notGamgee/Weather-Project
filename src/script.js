@@ -43,35 +43,42 @@ function displayTemperature(response) {
   }
   displayIcon();
 }
-function search(event) {
-  event.preventDefault();
-  let cityInputElement = document.querySelector("#search-input");
-  console.log(cityInputElement.value);
-  let h1 = document.querySelector("h1");
-  h1.innerHTML = cityInputElement.value;
+function search(city) {
+  let apiKey = "7059cb165caa3316bff682d263a01b1e";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`;
+  axios
+    .get(apiUrl)
+    .then(displayTemperature)
+    .catch((error) => {
+      console.error("Error fetching weather data:", error);
+
+      alert("Failed to fetch weather data. Please try again later.");
+    });
 }
 
-let apiKey = "7059cb165caa3316bff682d263a01b1e";
-let city = document.querySelector("h1").innerHTML;
-let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`;
-
-axios.get(apiUrl).then(displayTemperature);
+function handleSubmit(event) {
+  event.preventDefault();
+  let cityInputElement = document.querySelector("#search-input");
+  let h1 = document.querySelector("h1");
+  h1.innerHTML = cityInputElement.value;
+  search(cityInputElement.value);
+}
 
 let now = new Date();
 let days = ["Sunday", "Monday", "Tuesday", "Thursday", "Friday", "Saturday"];
 let month = [
-  "January",
-  "February",
-  "March",
-  "April",
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
   "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
 ];
 let currentMonth = month[now.getMonth()];
 let currentDay = days[now.getDay()];
@@ -84,4 +91,4 @@ let timeStamp = document.querySelector("#date-and-time");
 timeStamp.innerHTML = `${currentMonth} ${currentDate} ${currentTime}`;
 
 let form = document.querySelector("#search-form");
-form.addEventListener("submit", search);
+form.addEventListener("submit", handleSubmit);
