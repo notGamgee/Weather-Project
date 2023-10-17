@@ -43,6 +43,13 @@ function displayTemperature(response) {
   }
   displayIcon();
 }
+function search(event) {
+  event.preventDefault();
+  let cityInputElement = document.querySelector("#search-input");
+  console.log(cityInputElement.value);
+  let h1 = document.querySelector("h1");
+  h1.innerHTML = cityInputElement.value;
+}
 
 let apiKey = "7059cb165caa3316bff682d263a01b1e";
 let city = document.querySelector("h1").innerHTML;
@@ -75,3 +82,6 @@ let weekDay = document.querySelector("#day-of-week");
 weekDay.innerHTML = `${currentDay},`;
 let timeStamp = document.querySelector("#date-and-time");
 timeStamp.innerHTML = `${currentMonth} ${currentDate} ${currentTime}`;
+
+let form = document.querySelector("#search-form");
+form.addEventListener("submit", search);
