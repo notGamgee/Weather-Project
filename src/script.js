@@ -19,3 +19,29 @@ let city = document.querySelector("h1").innerHTML;
 let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`;
 
 axios.get(apiUrl).then(displayTemperature);
+
+let now = new Date();
+let days = ["Sunday", "Monday", "Tuesday", "Thursday", "Friday", "Saturday"];
+let month = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+let currentMonth = month[now.getMonth()];
+let currentDay = days[now.getDay()];
+let currentDate = now.getDate();
+let currentTime = `${now.getHours()}:${now.getMinutes()}`;
+
+let weekDay = document.querySelector("#day-of-week");
+weekDay.innerHTML = `${currentDay}`;
+let timeStamp = document.querySelector("#date-and-time");
+timeStamp.innerHTML = `${currentMonth}, ${currentDate} ${currentTime}`;
