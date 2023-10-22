@@ -13,6 +13,8 @@ function displayTemperature(response) {
   let adjusted = document.querySelector("#adjusted-temp");
   adjusted.innerHTML = Math.round(response.data.main.feels_like);
 
+  temperatureFahrenheit = response.data.main.temp;
+
   function displayIcon() {
     let condition = document.querySelector(".condition").innerHTML;
     let icon = document.querySelector(".main-icon i");
@@ -92,3 +94,23 @@ timeStamp.innerHTML = `${currentMonth} ${currentDate} ${currentTime}`;
 
 let form = document.querySelector("#search-form");
 form.addEventListener("submit", handleSubmit);
+
+function showCelsiusTemp(event) {
+  event.preventDefault();
+  let temperatureCelsius = ((temperatureFahrenheit - 32) * 5) / 9;
+  let currentTemp = document.querySelector(".temperature");
+  currentTemp.innerHTML = Math.round(temperatureCelsius);
+}
+
+function showFarenheitTemp(event) {
+  event.preventDefault();
+  let currentTemp = document.querySelector(".temperature");
+  currentTemp.innerHTML = Math.round(temperatureFahrenheit);
+}
+
+let celLink = document.querySelector("#celsius");
+celLink.addEventListener("click", showCelsiusTemp);
+let temperatureFahrenheit = null;
+
+let farLink = document.querySelector("#fahrenheit");
+farLink.addEventListener("click", showFarenheitTemp);
