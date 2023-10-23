@@ -94,6 +94,8 @@ timeStamp.innerHTML = `${currentMonth} ${currentDate} ${currentTime}`;
 
 let form = document.querySelector("#search-form");
 form.addEventListener("submit", handleSubmit);
+let button = document.querySelector("#go-button");
+button.addEventListener("click", handleSubmit);
 
 function showCelsiusTemp(event) {
   event.preventDefault();

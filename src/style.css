@@ -52,6 +52,15 @@ h1:first-letter {
   position: relative;
   top: +20px;
 }
+.weather-forecast {
+  margin-top: 20px;
+  text-align: center;
+}
+.weekday-icon {
+  margin: 10px;
+  display: block;
+}
+
 .github-link {
   text-align: center;
   font-size: small;
