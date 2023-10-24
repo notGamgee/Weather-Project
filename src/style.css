@@ -60,7 +60,9 @@ h1:first-letter {
   margin: 10px;
   display: block;
 }
-
+.forecast-temperature {
+  font-size: 12px;
+}
 .github-link {
   text-align: center;
   font-size: small;

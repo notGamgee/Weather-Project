@@ -1,19 +1,19 @@
 function displayTemperature(response) {
   console.log(response.data);
   let currentTemp = document.querySelector(".temperature");
-  currentTemp.innerHTML = Math.round(response.data.main.temp);
+  currentTemp.innerHTML = Math.round(response.data.temperature.current);
   let cityElement = document.querySelector("#city");
-  cityElement.innerHTML = response.data.name;
+  cityElement.innerHTML = response.data.city;
   let condition = document.querySelector(".condition");
-  condition.innerHTML = response.data.weather[0].description;
+  condition.innerHTML = response.data.condition.description;
   let humidityElement = document.querySelector("#humidity");
-  humidityElement.innerHTML = response.data.main.humidity;
+  humidityElement.innerHTML = response.data.temperature.humidity;
   let wind = document.querySelector("#wind");
   wind.innerHTML = Math.round(response.data.wind.speed);
   let adjusted = document.querySelector("#adjusted-temp");
-  adjusted.innerHTML = Math.round(response.data.main.feels_like);
+  adjusted.innerHTML = Math.round(response.data.temperature.feels_like);
 
-  temperatureFahrenheit = response.data.main.temp;
+  temperatureFahrenheit = response.data.temperature.current;
 
   function displayIcon() {
     let condition = document.querySelector(".condition").innerHTML;
@@ -46,8 +46,8 @@ function displayTemperature(response) {
   displayIcon();
 }
 function search(city) {
-  let apiKey = "7059cb165caa3316bff682d263a01b1e";
-  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`;
+  let apiKey = "34383otfa759ac03fe5a4377c986dab7";
+  let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=imperial`;
   axios
     .get(apiUrl)
     .then(displayTemperature)
@@ -64,6 +64,34 @@ function handleSubmit(event) {
   let h1 = document.querySelector("h1");
   h1.innerHTML = cityInputElement.value;
   search(cityInputElement.value);
+}
+
+function displayForecast() {
+  let forecastElement = document.querySelector("#forecast");
+
+  let forecastHTML = `<div class="row">`;
+  let days = ["Tue", "Wed", "Thu", "Fri", "Sat"];
+  days.forEach(function (day) {
+    forecastHTML =
+      forecastHTML +
+      `
+            <div class="col-2">
+              <div class="weather-forecast-day">${day}</div>
+              <div class="weekday-icon">
+                <i class="fa-solid fa-cloud fa-sm"></i>
+              </div>
+              <div class="forecast-temperature">
+                <span class="forecast-high">79</span>°
+                <span class="forecast-low">70</span>°
+              </div>
+            </div>
+        
+    `;
+  });
+
+  forecastHTML = forecastHTML + `</div>`;
+
+  forecastElement.innerHTML = forecastHTML;
 }
 
 let now = new Date();
@@ -116,3 +144,5 @@ let temperatureFahrenheit = null;
 
 let farLink = document.querySelector("#fahrenheit");
 farLink.addEventListener("click", showFarenheitTemp);
+
+displayForecast();
