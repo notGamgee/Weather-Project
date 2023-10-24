@@ -45,15 +45,19 @@ function displayTemperature(response) {
   }
   displayIcon();
 }
+
 function search(city) {
   let apiKey = "34383otfa759ac03fe5a4377c986dab7";
   let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=imperial`;
-  axios
-    .get(apiUrl)
-    .then(displayTemperature)
+  let forecastApi = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}`;
+
+  Promise.all([axios.get(apiUrl), axios.get(forecastApi)])
+    .then(([currentWeatherResponse, forecastResponse]) => {
+      displayTemperature(currentWeatherResponse);
+      showForecastData(forecastResponse);
+    })
     .catch((error) => {
       console.error("Error fetching weather data:", error);
-
       alert("Failed to fetch weather data. Please try again later.");
     });
 }
@@ -66,23 +70,29 @@ function handleSubmit(event) {
   search(cityInputElement.value);
 }
 
-function displayForecast() {
+function showForecastData(response) {
+  console.log(response.data);
+  let forecastData = response.data.daily;
   let forecastElement = document.querySelector("#forecast");
 
   let forecastHTML = `<div class="row">`;
-  let days = ["Tue", "Wed", "Thu", "Fri", "Sat"];
-  days.forEach(function (day) {
+
+  forecastData.forEach(function (forecastday) {
     forecastHTML =
       forecastHTML +
       `
             <div class="col-2">
-              <div class="weather-forecast-day">${day}</div>
+              <div class="weather-forecast-day">${forecastday.time}</div>
               <div class="weekday-icon">
                 <i class="fa-solid fa-cloud fa-sm"></i>
               </div>
               <div class="forecast-temperature">
-                <span class="forecast-high">79</span>°
-                <span class="forecast-low">70</span>°
+                <span class="forecast-high">${Math.round(
+                  forecastday.temperature.maximum
+                )}</span>°
+                <span class="forecast-low">${Math.round(
+                  forecastday.temperature.minimum
+                )}</span>°
               </div>
             </div>
         
@@ -144,5 +154,3 @@ let temperatureFahrenheit = null;
 
 let farLink = document.querySelector("#fahrenheit");
 farLink.addEventListener("click", showFarenheitTemp);
-
-displayForecast();
