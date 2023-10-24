@@ -4,5 +4,7 @@ I have fully enjoyed working on this project and will use the skills I learned w
 Future improvements to consider: 
 
   unit conversion in the forecast section (from °F to °C and back) 
+  
   add SheCodes weather icon img instead of FontAwesome img
+  
   higher contrast between background and weather icon images
