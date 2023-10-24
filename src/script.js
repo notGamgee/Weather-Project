@@ -70,6 +70,14 @@ function handleSubmit(event) {
   search(cityInputElement.value);
 }
 
+function formatWeekday(timestamp) {
+  let date = new Date(timestamp * 1000);
+  let day = date.getDay();
+  let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+  return days[day];
+}
+
 function showForecastData(response) {
   console.log(response.data);
   let forecastData = response.data.daily;
@@ -77,26 +85,33 @@ function showForecastData(response) {
 
   let forecastHTML = `<div class="row">`;
 
-  forecastData.forEach(function (forecastday) {
-    forecastHTML =
-      forecastHTML +
-      `
-            <div class="col-2">
-              <div class="weather-forecast-day">${forecastday.time}</div>
+  forecastData.forEach(function (forecastDay, index) {
+    if (index < 6) {
+      forecastHTML =
+        forecastHTML +
+        `
+            <div class="col-2" class="weekday">
+              <div class="weather-forecast-day">${formatWeekday(
+                forecastDay.time
+              )}</div>
               <div class="weekday-icon">
-                <i class="fa-solid fa-cloud fa-sm"></i>
+                <img
+                src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/${
+                  forecastDay.condition.icon
+                }.png" width="42" />
               </div>
               <div class="forecast-temperature">
                 <span class="forecast-high">${Math.round(
-                  forecastday.temperature.maximum
+                  forecastDay.temperature.maximum
                 )}</span>°
                 <span class="forecast-low">${Math.round(
-                  forecastday.temperature.minimum
+                  forecastDay.temperature.minimum
                 )}</span>°
               </div>
             </div>
         
     `;
+    }
   });
 
   forecastHTML = forecastHTML + `</div>`;
@@ -127,8 +142,8 @@ let currentTime = `${now.getHours()}:${now.getMinutes()}`;
 
 let weekDay = document.querySelector("#day-of-week");
 weekDay.innerHTML = `${currentDay},`;
-let timeStamp = document.querySelector("#date-and-time");
-timeStamp.innerHTML = `${currentMonth} ${currentDate} ${currentTime}`;
+let timeData = document.querySelector("#date-and-time");
+timeData.innerHTML = `${currentMonth} ${currentDate} ${currentTime}`;
 
 let form = document.querySelector("#search-form");
 form.addEventListener("submit", handleSubmit);

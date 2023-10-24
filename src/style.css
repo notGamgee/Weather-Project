@@ -1,3 +1,10 @@
+body {
+  background: linear-gradient(
+    177.9deg,
+    rgb(58, 62, 88) 3.6%,
+    rgb(119, 127, 148) 105.8%
+  );
+}
 .container {
   font-family: "IBM Plex Mono", monospace;
 }
@@ -8,6 +15,7 @@
   padding: 30px;
   border: 1px solid;
   border-radius: 10px;
+  background-color: #ebf6f7;
 }
 ul {
   padding-left: 0%;
@@ -62,6 +70,9 @@ h1:first-letter {
 }
 .forecast-temperature {
   font-size: 12px;
+}
+.weekday {
+  text-align: center;
 }
 .github-link {
   text-align: center;
